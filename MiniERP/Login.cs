@@ -30,7 +30,12 @@ namespace MiniERP
             {
                 string usuario = textBoxUsuario.Text;
                 string senha = textBoxSenha.Text;
-                conexaoString = "Data Source=DESKTOP-RQ1P8OB\\SQLEXPRESS01;" +
+                //conexaoString = "Data Source=DESKTOP-RQ1P8OB\\SQLEXPRESS01;" +
+                //    "Initial Catalog=aula;" +
+                //    "User ID=" + usuario + ";" +
+                //    "password=" + senha + ";" +
+                //    "language=Portuguese";
+                conexaoString = "Data Source=DESKTOP-RQ1P8OB\\SQLEXPRESS;" +
                     "Initial Catalog=aula;" +
                     "User ID=" + usuario + ";" +
                     "password=" + senha + ";" +
