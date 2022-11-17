@@ -30,12 +30,7 @@ namespace MiniERP
             {
                 string usuario = textBoxUsuario.Text;
                 string senha = textBoxSenha.Text;
-                //conexaoString = "Data Source=DESKTOP-RQ1P8OB\\SQLEXPRESS01;" +
-                //    "Initial Catalog=aula;" +
-                //    "User ID=" + usuario + ";" +
-                //    "password=" + senha + ";" +
-                //    "language=Portuguese";
-                conexaoString = "Data Source=DESKTOP-RQ1P8OB\\SQLEXPRESS;" +
+                conexaoString = "Data Source=(localdb)\\MSSQLLocalDB;" +
                     "Initial Catalog=aula;" +
                     "User ID=" + usuario + ";" +
                     "password=" + senha + ";" +
@@ -45,7 +40,7 @@ namespace MiniERP
 
                 this.Visible = false;
 
-                Form1 forms = new Form1(usuario);
+                Form1 forms = new Form1(conexaoString);
                 forms.ShowDialog();
 
                 this.Visible = true;
