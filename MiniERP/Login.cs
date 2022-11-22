@@ -49,7 +49,7 @@ namespace MiniERP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Problemas de Conexão com o Banco " + ex.Message, "Alerta");
+                //MessageBox.Show("Problemas de Conexão com o Banco " + ex.Message, "Alerta");
             }
         }
     }
