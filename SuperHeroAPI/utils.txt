@@ -1,0 +1,13 @@
+﻿/* foram necessários os comandos:
+
+dotnet tool install --global dotnet-ef --version <versao_desejada>
+
+e também:
+
+dotnet ef
+
+dotnet ef migrations add CreateInitial
+dotnet ef database update
+
+*/
+
