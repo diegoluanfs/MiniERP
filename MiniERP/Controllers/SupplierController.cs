@@ -36,9 +36,9 @@ namespace MiniERP.Controllers
 
         [HttpPost]
         [Route("AddSupplier")]
-        public async Task<ActionResult<List<Supplier>>> AddSupplier(Supplier supplier)
+        public async Task<ActionResult<List<Supplier>>> AddSupplier(ReqSupplier reqSupplier)
         {
-            await _supplierService.AddSupplierAsync(supplier);
+            await _supplierService.AddSupplierAsync(reqSupplier);
             return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 

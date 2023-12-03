@@ -1,8 +1,7 @@
 ﻿namespace MiniERP
 {
-    public class RespCustomer
+    public class ReqSupplier
     {
-        public int CustomerId { get; set; }
         public string Name { get; set; }
     }
 }
