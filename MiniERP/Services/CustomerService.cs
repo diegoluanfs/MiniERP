@@ -50,11 +50,10 @@ namespace MiniERP.Services
             await _repository.AddCustomerAsync(customer);
         }
 
-
         public async Task UpdateCustomerAsync(Customer customer)
         {
             Customer customerResp = await GetCustomerByIdAsync(customer.CustomerId);
-            if (customerResp != null)
+            if (customerResp == null)
             {
                 throw new Exception("Usuário não encontrado");
             }
@@ -65,7 +64,7 @@ namespace MiniERP.Services
         public async Task DeleteCustomerAsync(int id)
         {
             Customer customerResp = await GetCustomerByIdAsync(id);
-            if (customerResp != null)
+            if (customerResp == null)
             {
                 throw new Exception("Usuário não encontrado");
             }

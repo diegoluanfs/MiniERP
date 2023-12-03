@@ -33,9 +33,9 @@ namespace MiniERP.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
+        public async Task<ActionResult<List<Product>>> AddProduct(ReqProduct reqProduct)
         {
-            await _productService.AddProductAsync(product);
+            await _productService.AddProductAsync(reqProduct);
             return Ok(await _productService.GetAllProductsAsync());
         }
 

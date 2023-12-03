@@ -36,9 +36,7 @@ namespace MiniERP.Repositories
             if (dbSupplier != null)
             {
                 // Atualize as propriedades conforme necessário.
-                //dbSupplier.Property1 = supplier.Property1;
-                //dbSupplier.Property2 = supplier.Property2;
-                // ...
+                dbSupplier.Name = supplier.Name;
 
                 await _context.SaveChangesAsync();
             }

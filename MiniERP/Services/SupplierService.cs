@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MiniERP.Data;
 using MiniERP.Repositories;
@@ -44,7 +45,9 @@ namespace MiniERP.Services
             }
 
             Supplier supplier = new Supplier();
-            supplier.Name= sanitizedName;
+            supplier.Name = sanitizedName;
+
+            // Adicione aqui outras validações necessárias para o objeto ReqSupplier
 
             await _repository.AddSupplierAsync(supplier);
         }
@@ -52,10 +55,12 @@ namespace MiniERP.Services
         public async Task UpdateSupplierAsync(Supplier supplier)
         {
             Supplier respSupplier = await GetSupplierByIdAsync(supplier.SupplierId);
-            if (respSupplier != null)
+            if (respSupplier == null)
             {
                 throw new Exception("Fornecedor não encontrado!");
             }
+
+            // Adicione aqui outras validações necessárias para o objeto Supplier
 
             await _repository.UpdateSupplierAsync(supplier);
         }
@@ -63,10 +68,12 @@ namespace MiniERP.Services
         public async Task DeleteSupplierAsync(int id)
         {
             Supplier respSupplier = await GetSupplierByIdAsync(id);
-            if (respSupplier != null)
+            if (respSupplier == null)
             {
                 throw new Exception("Fornecedor não encontrado!");
             }
+
+            // Adicione aqui outras validações necessárias antes de excluir o fornecedor
 
             await _repository.DeleteSupplierAsync(id);
         }

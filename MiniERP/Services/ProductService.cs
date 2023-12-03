@@ -24,8 +24,16 @@ namespace MiniERP.Services
             return await _repository.GetProductByIdAsync(id);
         }
 
-        public async Task AddProductAsync(Product product)
+        public async Task AddProductAsync(ReqProduct reqProduct)
         {
+            var product = new Product();
+            product.Customer = new Customer();
+            product.Supplier = new Supplier();
+            product.Name = reqProduct.Name;
+            product.Price = reqProduct.Price;
+            product.Customer = reqProduct.Customer;
+            product.Supplier = reqProduct.Supplier;
+
             await _repository.AddProductAsync(product);
         }
 
