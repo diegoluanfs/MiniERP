@@ -1,4 +1,4 @@
-global using SuperHeroAPI.Data;
+global using MiniERP.Data;
 global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
