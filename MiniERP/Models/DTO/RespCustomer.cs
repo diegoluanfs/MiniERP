@@ -1,12 +1,8 @@
 ﻿namespace MiniERP
 {
-    public class Customer
+    public class RespCustomer
     {
         public int CustomerId { get; set; }
         public string Name { get; set; }
-
-        public Customer() { }
-
-        public Customer(int CustomerId, string Name) { }
     }
 }

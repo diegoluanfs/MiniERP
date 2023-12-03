@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MiniERP.Data;
+using MiniERP.Services;
 
 namespace MiniERP.Controllers
 {
@@ -8,65 +10,52 @@ namespace MiniERP.Controllers
     [ApiController]
     public class SupplierController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly SupplierService _supplierService;
 
-        public SupplierController(DataContext context)
+        public SupplierController(SupplierService supplierService)
         {
-            _context = context;
+            _supplierService = supplierService;
         }
 
         [HttpGet]
+        [Route("Get")]
         public async Task<ActionResult<List<Supplier>>> Get()
         {
-            return Ok(await _context.Suppliers.ToListAsync());
+            return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Supplier>> Get(int id)
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ActionResult<Supplier>> GetById(int id)
         {
-            var supplier = await _context.Suppliers.FindAsync(id);
+            var supplier = await _supplierService.GetSupplierByIdAsync(id);
             if (supplier == null)
                 return BadRequest("Supplier not found.");
             return Ok(supplier);
         }
 
         [HttpPost]
+        [Route("AddSupplier")]
         public async Task<ActionResult<List<Supplier>>> AddSupplier(Supplier supplier)
         {
-            _context.Suppliers.Add(supplier);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Suppliers.ToListAsync());
+            await _supplierService.AddSupplierAsync(supplier);
+            return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 
         [HttpPut]
+        [Route("UpdateSupplier")]
         public async Task<ActionResult<List<Supplier>>> UpdateSupplier(Supplier request)
         {
-            var dbSupplier = await _context.Suppliers.FindAsync(request.SupplierId);
-            if (dbSupplier == null)
-                return BadRequest("Supplier not found.");
-
-            // Atualize as propriedades conforme necessário
-            //dbSupplier.Property1 = request.Property1;
-            //dbSupplier.Property2 = request.Property2;
-            // ...
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Suppliers.ToListAsync());
+            await _supplierService.UpdateSupplierAsync(request);
+            return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("DeleteSupplier")]
         public async Task<ActionResult<List<Supplier>>> DeleteSupplier(int id)
         {
-            var dbSupplier = await _context.Suppliers.FindAsync(id);
-            if (dbSupplier == null)
-                return BadRequest("Supplier not found.");
-
-            _context.Suppliers.Remove(dbSupplier);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Suppliers.ToListAsync());
+            await _supplierService.DeleteSupplierAsync(id);
+            return Ok(await _supplierService.GetAllSuppliersAsync());
         }
     }
 }

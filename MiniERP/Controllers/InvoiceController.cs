@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MiniERP.Data;
+using MiniERP.Services;
 
 namespace MiniERP.Controllers
 {
@@ -8,23 +10,23 @@ namespace MiniERP.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly InvoiceService _invoiceService;
 
-        public InvoiceController(DataContext context)
+        public InvoiceController(InvoiceService invoiceService)
         {
-            _context = context;
+            _invoiceService = invoiceService;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Invoice>>> Get()
         {
-            return Ok(await _context.Invoices.ToListAsync());
+            return Ok(await _invoiceService.GetAllInvoicesAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Invoice>> Get(int id)
         {
-            var invoice = await _context.Invoices.FindAsync(id);
+            var invoice = await _invoiceService.GetInvoiceByIdAsync(id);
             if (invoice == null)
                 return BadRequest("Invoice not found.");
             return Ok(invoice);
@@ -33,40 +35,22 @@ namespace MiniERP.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Invoice>>> AddInvoice(Invoice invoice)
         {
-            _context.Invoices.Add(invoice);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Invoices.ToListAsync());
+            await _invoiceService.AddInvoiceAsync(invoice);
+            return Ok(await _invoiceService.GetAllInvoicesAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Invoice>>> UpdateInvoice(Invoice request)
         {
-            var dbInvoice = await _context.Invoices.FindAsync(request.InvoiceId);
-            if (dbInvoice == null)
-                return BadRequest("Invoice not found.");
-
-            // Atualize as propriedades conforme necessário
-            //dbInvoice.Property1 = request.Property1;
-            //dbInvoice.Property2 = request.Property2;
-            // ...
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Invoices.ToListAsync());
+            await _invoiceService.UpdateInvoiceAsync(request);
+            return Ok(await _invoiceService.GetAllInvoicesAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Invoice>>> DeleteInvoice(int id)
         {
-            var dbInvoice = await _context.Invoices.FindAsync(id);
-            if (dbInvoice == null)
-                return BadRequest("Invoice not found.");
-
-            _context.Invoices.Remove(dbInvoice);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Invoices.ToListAsync());
+            await _invoiceService.DeleteInvoiceAsync(id);
+            return Ok(await _invoiceService.GetAllInvoicesAsync());
         }
     }
 }

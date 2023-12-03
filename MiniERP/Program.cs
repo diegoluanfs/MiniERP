@@ -1,5 +1,7 @@
 global using MiniERP.Data;
 global using Microsoft.EntityFrameworkCore;
+using MiniERP.Services;
+using MiniERP.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,16 @@ builder.Services.AddDbContext<DataContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<SupplierService>();
+builder.Services.AddScoped<ProductService>();
+
+builder.Services.AddScoped<CustomerRepository>();
+builder.Services.AddScoped<InvoiceRepository>();
+builder.Services.AddScoped<SupplierRepository>();
+builder.Services.AddScoped<ProductRepository>();
 
 var app = builder.Build();
 

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MiniERP.Data;
+using MiniERP.Services;
 
 namespace MiniERP.Controllers
 {
@@ -8,23 +10,23 @@ namespace MiniERP.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ProductService _productService;
 
-        public ProductController(DataContext context)
+        public ProductController(ProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            return Ok(await _context.Products.ToListAsync());
+            return Ok(await _productService.GetAllProductsAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> Get(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _productService.GetProductByIdAsync(id);
             if (product == null)
                 return BadRequest("Product not found.");
             return Ok(product);
@@ -33,40 +35,22 @@ namespace MiniERP.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Product>>> AddProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Products.ToListAsync());
+            await _productService.AddProductAsync(product);
+            return Ok(await _productService.GetAllProductsAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Product>>> UpdateProduct(Product request)
         {
-            var dbProduct = await _context.Products.FindAsync(request.ProductId);
-            if (dbProduct == null)
-                return BadRequest("Product not found.");
-
-            // Atualize as propriedades conforme necessário
-            //dbProduct.Property1 = request.Property1;
-            //dbProduct.Property2 = request.Property2;
-            // ...
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Products.ToListAsync());
+            await _productService.UpdateProductAsync(request);
+            return Ok(await _productService.GetAllProductsAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Product>>> DeleteProduct(int id)
         {
-            var dbProduct = await _context.Products.FindAsync(id);
-            if (dbProduct == null)
-                return BadRequest("Product not found.");
-
-            _context.Products.Remove(dbProduct);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Products.ToListAsync());
+            await _productService.DeleteProductAsync(id);
+            return Ok(await _productService.GetAllProductsAsync());
         }
     }
 }
