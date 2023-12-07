@@ -8,7 +8,7 @@
         // Other properties specific to products
 
         // Composition: references to Customer and Supplier
-        public Customer Customer { get; set; }
-        public Supplier Supplier { get; set; }
+        public int CustomerId { get; set; }
+        public int SupplierId { get; set; }
     }
 }

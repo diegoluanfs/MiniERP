@@ -23,7 +23,8 @@ namespace MiniERP.Services
 
         public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            return await _repository.GetCustomerByIdAsync(id);
+            var req = await _repository.GetCustomerByIdAsync(id);
+            return req;
         }
 
         public async Task AddCustomerAsync(ReqCustomer reqCustomer)

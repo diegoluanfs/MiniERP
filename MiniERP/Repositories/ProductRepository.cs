@@ -24,10 +24,11 @@ namespace MiniERP.Repositories
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task AddProductAsync(Product product)
+        public async Task<int> AddProductAsync(Product product)
         {
             _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            var resp = await _context.SaveChangesAsync();
+            return resp;
         }
 
         public async Task UpdateProductAsync(Product product)
