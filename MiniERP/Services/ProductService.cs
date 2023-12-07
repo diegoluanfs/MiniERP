@@ -39,7 +39,6 @@ namespace MiniERP.Services
             {
                 Name = reqProduct.Name,
                 Price = reqProduct.Price,
-                CustomerId = reqProduct.CustomerId,
                 SupplierId = reqProduct.SupplierId
             };
 
@@ -72,7 +71,6 @@ namespace MiniERP.Services
 
         private async Task<RespProduct> MapProductToRespProduct(Product product)
         {
-            var customer = await MapCustomerAsync(product.CustomerId);
             var supplier = await MapSupplierAsync(product.SupplierId);
 
             return new RespProduct
@@ -80,7 +78,6 @@ namespace MiniERP.Services
                 ProductId = product.ProductId,
                 Name = product.Name,
                 Price = product.Price,
-                Customer = customer,
                 Supplier = supplier
             };
         }
@@ -107,11 +104,6 @@ namespace MiniERP.Services
 
         private async Task VerifyProduct(ReqProduct reqProduct)
         {
-            if (await _serviceCustomer.GetCustomerByIdAsync(reqProduct.CustomerId) == null)
-            {
-                throw new Exception("Cliente não encontrado.");
-            }
-
             if (await _serviceSupplier.GetSupplierByIdAsync(reqProduct.SupplierId) == null)
             {
                 throw new Exception("Fornecedor não encontrado.");
@@ -134,11 +126,6 @@ namespace MiniERP.Services
             if (existingProduct == null)
             {
                 throw new Exception("Produto não encontrado.");
-            }
-
-            if (await _serviceCustomer.GetCustomerByIdAsync(product.CustomerId) == null)
-            {
-                throw new Exception("Cliente não encontrado.");
             }
 
             if (await _serviceSupplier.GetSupplierByIdAsync(product.SupplierId) == null)
