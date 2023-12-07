@@ -102,6 +102,7 @@ namespace MiniERP.Services
             };
         }
 
+
         private async Task VerifyProduct(ReqProduct reqProduct)
         {
             if (await _serviceSupplier.GetSupplierByIdAsync(reqProduct.SupplierId) == null)
