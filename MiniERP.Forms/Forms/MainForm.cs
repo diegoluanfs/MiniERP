@@ -1,33 +1,25 @@
-﻿// MainForm.cs
-using System;
-using System.Windows.Forms;
-using MiniERP.Customers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MiniERP.Forms
+namespace MiniERP.Forms.Forms
 {
-    public partial class MainForm : Form
+    public partial class MainForm:Form
     {
-        private CustomerLayout customerLayout;
-
         public MainForm()
         {
             InitializeComponent();
-            customerLayout = new CustomerLayout();
         }
 
         private void btnCustomer_Click(object sender, EventArgs e)
         {
-            customerLayout.ModifyLayoutForCustomer(this);
-        }
+            // Criar uma instância do novo formulário
+            CustomerForm customerForm = new CustomerForm();
 
-        private void btnSupplier_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnInvoice_Click(object sender, EventArgs e)
-        {
-
+            // Exibir o novo formulário
+            customerForm.Show();
         }
     }
 }

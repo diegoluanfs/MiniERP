@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniERP.Forms", "MiniERP.Forms\MiniERP.Forms.csproj", "{AC19E53D-B5BB-4188-A31E-551F27836D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniERP.Forms", "MiniERP.Forms\MiniERP.Forms.csproj", "{AC19E53D-B5BB-4188-A31E-551F27836D54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

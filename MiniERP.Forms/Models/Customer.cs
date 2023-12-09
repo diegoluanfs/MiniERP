@@ -1,4 +1,4 @@
-﻿namespace MiniERP.Forms
+﻿namespace MiniERP.Forms.Models
 {
     public class Customer
     {
