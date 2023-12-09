@@ -55,6 +55,7 @@
             this.btnProduct.Size = new System.Drawing.Size(150, 150);
             this.btnProduct.TabIndex = 1;
             this.btnProduct.UseVisualStyleBackColor = true;
+            this.btnProduct.Click += new System.EventHandler(this.btnProduct_Click);
             // 
             // btnInvoice
             // 
@@ -79,9 +80,9 @@
             this.lblProduct.AutoSize = true;
             this.lblProduct.Location = new System.Drawing.Point(344, 138);
             this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(68, 20);
+            this.lblProduct.Size = new System.Drawing.Size(98, 20);
             this.lblProduct.TabIndex = 4;
-            this.lblProduct.Text = "Produtos";
+            this.lblProduct.Text = "Fornecedores";
             // 
             // lblInvoice
             // 

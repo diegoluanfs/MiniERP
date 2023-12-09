@@ -7,7 +7,7 @@ namespace MiniERP.Tools
     {
         public string ClearString(string phrase)
         {
-            Regex regex = new Regex("^[a-zA-Z]*$");
+            Regex regex = new Regex("^[a-zA-Z ]*$");
 
             if (!regex.IsMatch(phrase))
             {

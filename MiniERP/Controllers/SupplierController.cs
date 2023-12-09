@@ -18,14 +18,12 @@ namespace MiniERP.Controllers
         }
 
         [HttpGet]
-        [Route("Get")]
         public async Task<ActionResult<List<Supplier>>> Get()
         {
             return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 
-        [HttpGet]
-        [Route("GetById")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Supplier>> GetById(int id)
         {
             var supplier = await _supplierService.GetSupplierByIdAsync(id);
@@ -35,7 +33,6 @@ namespace MiniERP.Controllers
         }
 
         [HttpPost]
-        [Route("AddSupplier")]
         public async Task<ActionResult<List<Supplier>>> AddSupplier(ReqSupplier reqSupplier)
         {
             await _supplierService.AddSupplierAsync(reqSupplier);
@@ -43,15 +40,13 @@ namespace MiniERP.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateSupplier")]
         public async Task<ActionResult<List<Supplier>>> UpdateSupplier(Supplier request)
         {
             await _supplierService.UpdateSupplierAsync(request);
             return Ok(await _supplierService.GetAllSuppliersAsync());
         }
 
-        [HttpDelete]
-        [Route("DeleteSupplier")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<List<Supplier>>> DeleteSupplier(int id)
         {
             await _supplierService.DeleteSupplierAsync(id);
