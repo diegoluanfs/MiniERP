@@ -9,23 +9,23 @@ using System.Windows.Forms;
 
 namespace MiniERP.Forms.Forms
 {
-    public partial class CustomerForm : Form
+    public partial class SupplierForm : Form
     {
-        public CustomerForm()
+        public SupplierForm()
         {
             InitializeComponent();
 
             // Adiciona o manipulador de evento para o clique em uma célula do DataGridView
-            dataGridViewCustomer.CellClick += DataGridViewCustomer_CellClick;
+            dataGridViewSupplier.CellClick += DataGridViewSupplier_CellClick;
             // Define o modo de somente leitura para o DataGridView
-            dataGridViewCustomer.ReadOnly = true;
+            dataGridViewSupplier.ReadOnly = true;
 
             // Adiciona os manipuladores de evento TextChanged para os campos de texto
-            txtCID.TextChanged += TxtCID_TextChanged;
-            txtCName.TextChanged += TxtCName_TextChanged;
+            txtSID.TextChanged += TxtCID_TextChanged;
+            txtSName.TextChanged += TxtCName_TextChanged;
 
-            // Adiciona o manipulador de evento KeyPress para aceitar apenas números no txtCID
-            txtCID.KeyPress += TxtCID_KeyPress;
+            // Adiciona o manipulador de evento KeyPress para aceitar apenas números no txtSID
+            txtSID.KeyPress += TxtCID_KeyPress;
 
             // Define o texto inicial do botão com base nos valores dos campos de texto
             UpdateButtonText();
@@ -37,31 +37,31 @@ namespace MiniERP.Forms.Forms
             this.Close();
         }
 
-        private async void btnMakeCustomer_Click(object sender, EventArgs e)
+        private async void btnMakeSupplier_Click(object sender, EventArgs e)
         {
-            string textCustomer = btnMakeCustomer.Text;
+            string textSupplier = btnMakeSupplier.Text;
 
-            if (textCustomer == "Listar")
+            if (textSupplier == "Listar")
             {
                 ListAllAsync();
             }
-            else if (textCustomer == "Buscar por Id")
+            else if (textSupplier == "Buscar por Id")
             {
-                ListByIdAsync(txtCID.Text);
+                ListByIdAsync(txtSID.Text);
             }
-            else if (textCustomer == "Adicionar")
+            else if (textSupplier == "Adicionar")
             {
-                await AddAsync(txtCName.Text);
+                await AddAsync(txtSName.Text);
             }
-            else if (textCustomer == "Editar")
+            else if (textSupplier == "Editar")
             {
-                await EditAsync(txtCID.Text, txtCName.Text);
+                await EditAsync(txtSID.Text, txtSName.Text);
             }
         }
 
         private async void ListByIdAsync(string id)
         {
-            string apiUrl = "https://localhost:7056/api/customer/" + id;
+            string apiUrl = "https://localhost:7056/api/supplier/" + id;
 
             try
             {
@@ -71,31 +71,31 @@ namespace MiniERP.Forms.Forms
 
                     if (response.IsSuccessStatusCode)
                     {
-                        // Deserializa o JSON para um objeto Customer
-                        var customer = JsonConvert.DeserializeObject<Customer>(await response.Content.ReadAsStringAsync());
+                        // Deserializa o JSON para um objeto Supplier
+                        var supplier = JsonConvert.DeserializeObject<Supplier>(await response.Content.ReadAsStringAsync());
 
                         // Verifica se o objeto não é nulo
-                        if (customer != null)
+                        if (supplier != null)
                         {
                             // Obtém a fonte de dados atual do DataGridView, se existir
-                            var dataSource = dataGridViewCustomer.DataSource as List<Customer>;
+                            var dataSource = dataGridViewSupplier.DataSource as List<Supplier>;
 
                             // Se não houver uma fonte de dados, crie uma nova lista
                             if (dataSource == null)
                             {
-                                dataSource = new List<Customer>();
+                                dataSource = new List<Supplier>();
                             }
 
-                            // Adiciona o novo cliente à fonte de dados
-                            dataSource.Add(customer);
+                            // Adiciona o novo fornecedor à fonte de dados
+                            dataSource.Add(supplier);
 
                             // Atualiza a fonte de dados do DataGridView
-                            dataGridViewCustomer.DataSource = null;
-                            dataGridViewCustomer.DataSource = dataSource;
+                            dataGridViewSupplier.DataSource = null;
+                            dataGridViewSupplier.DataSource = dataSource;
                         }
                         else
                         {
-                            MessageBox.Show("Cliente não encontrado.");
+                            MessageBox.Show("Fornecedor não encontrado.");
                         }
                     }
                     else
@@ -112,7 +112,7 @@ namespace MiniERP.Forms.Forms
 
         private async void ListAllAsync()
         {
-            string apiUrl = "https://localhost:7056/api/customer";
+            string apiUrl = "https://localhost:7056/api/supplier";
 
             try
             {
@@ -122,8 +122,8 @@ namespace MiniERP.Forms.Forms
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var customers = JsonConvert.DeserializeObject<Customer[]>(await response.Content.ReadAsStringAsync());
-                        dataGridViewCustomer.DataSource = customers;
+                        var suppliers = JsonConvert.DeserializeObject<Supplier[]>(await response.Content.ReadAsStringAsync());
+                        dataGridViewSupplier.DataSource = suppliers;
                     }
                     else
                     {
@@ -139,31 +139,30 @@ namespace MiniERP.Forms.Forms
 
         private async Task AddAsync(string name)
         {
-            string apiUrl = "https://localhost:7056/api/customer";
+            string apiUrl = "https://localhost:7056/api/supplier";
 
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    // Cria um novo objeto Customer com o nome fornecido
-                    var newCustomer = new Customer { Name = name };
+                    // Cria um novo objeto Supplier com o nome fornecido
+                    var newSupplier = new Supplier { Name = name };
 
-                    // Serializa o objeto Customer para JSON
-                    string jsonCustomer = JsonConvert.SerializeObject(newCustomer);
+                    // Serializa o objeto Supplier para JSON
+                    string jsonSupplier = JsonConvert.SerializeObject(newSupplier);
 
                     // Cria um conteúdo JSON para a requisição
-                    var content = new StringContent(jsonCustomer, Encoding.UTF8, "application/json");
+                    var content = new StringContent(jsonSupplier, Encoding.UTF8, "application/json");
 
-                    // Envia a requisição HTTP POST para adicionar um novo cliente
+                    // Envia a requisição HTTP POST para adicionar um novo fornecedor
                     HttpResponseMessage response = await client.PostAsync(apiUrl, content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Cliente adicionado com sucesso.");
-                        // Atualiza a lista de clientes após adicionar um novo cliente
-
-                        txtCName.Text = "";
-                        txtCID.Text = "";
+                        MessageBox.Show("Fornecedor adicionado com sucesso.");
+                        // Atualiza a lista de fornecedores após adicionar um novo fornecedor
+                        txtSName.Text = "";
+                        txtSID.Text = "";
                         btnClean.Enabled = false;
 
                         ListAllAsync();
@@ -182,30 +181,30 @@ namespace MiniERP.Forms.Forms
 
         private async Task EditAsync(string id, string name)
         {
-            string apiUrl = "https://localhost:7056/api/customer/";
+            string apiUrl = "https://localhost:7056/api/supplier/";
 
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    // Cria um objeto Customer com o ID e o novo nome fornecidos
-                    var updatedCustomer = new Customer { CustomerId = int.Parse(id), Name = name };
+                    // Cria um objeto Supplier com o ID e o novo nome fornecidos
+                    var updatedSupplier = new Supplier { SupplierId = int.Parse(id), Name = name };
 
-                    // Serializa o objeto Customer para JSON
-                    string jsonCustomer = JsonConvert.SerializeObject(updatedCustomer);
+                    // Serializa o objeto Supplier para JSON
+                    string jsonSupplier = JsonConvert.SerializeObject(updatedSupplier);
 
                     // Cria um conteúdo JSON para a requisição
-                    var content = new StringContent(jsonCustomer, Encoding.UTF8, "application/json");
+                    var content = new StringContent(jsonSupplier, Encoding.UTF8, "application/json");
 
-                    // Envia a requisição HTTP PUT para editar o cliente existente
+                    // Envia a requisição HTTP PUT para editar o fornecedor existente
                     HttpResponseMessage response = await client.PutAsync(apiUrl, content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Cliente editado com sucesso.");
-                        // Atualiza a lista de clientes após editar um cliente existente
-                        txtCName.Text = "";
-                        txtCID.Text = "";
+                        MessageBox.Show("Fornecedor editado com sucesso.");
+                        // Atualiza a lista de fornecedors após editar um fornecedor existente
+                        txtSName.Text = "";
+                        txtSID.Text = "";
                         btnClean.Enabled = false;
 
                         ListAllAsync();
@@ -224,15 +223,15 @@ namespace MiniERP.Forms.Forms
         }
 
         // Manipulador de evento para o clique em uma célula do DataGridView
-        private void DataGridViewCustomer_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewSupplier_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Verifica se o clique foi em uma célula válida e não no cabeçalho
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 // Obtém os dados da linha clicada
-                DataGridViewRow row = dataGridViewCustomer.Rows[e.RowIndex];
-                txtCID.Text = row.Cells["CustomerId"].Value.ToString();
-                txtCName.Text = row.Cells["Name"].Value.ToString();
+                DataGridViewRow row = dataGridViewSupplier.Rows[e.RowIndex];
+                txtSID.Text = row.Cells["SupplierId"].Value.ToString();
+                txtSName.Text = row.Cells["Name"].Value.ToString();
             }
         }
 
@@ -247,27 +246,27 @@ namespace MiniERP.Forms.Forms
         }
         private void UpdateButtonText()
         {
-            bool isCIDEmpty = string.IsNullOrWhiteSpace(txtCID.Text);
-            bool isCNameEmpty = string.IsNullOrWhiteSpace(txtCName.Text);
+            bool isCIDEmpty = string.IsNullOrWhiteSpace(txtSID.Text);
+            bool isCNameEmpty = string.IsNullOrWhiteSpace(txtSName.Text);
 
             if (isCIDEmpty && isCNameEmpty)
             {
-                btnMakeCustomer.Text = "Listar";
+                btnMakeSupplier.Text = "Listar";
             }
             else if (!isCIDEmpty && isCNameEmpty)
             {
-                btnMakeCustomer.Text = "Buscar por Id";
+                btnMakeSupplier.Text = "Buscar por Id";
             }
             else if (isCIDEmpty && !isCNameEmpty)
             {
-                btnMakeCustomer.Text = "Adicionar";
+                btnMakeSupplier.Text = "Adicionar";
             }
             else
             {
-                btnMakeCustomer.Text = "Editar";
+                btnMakeSupplier.Text = "Editar";
             }
 
-            // Habilita ou desabilita o botão btnClean com base nos campos txtCID e txtCName
+            // Habilita ou desabilita o botão btnClean com base nos campos txtSID e txtSName
             btnClean.Enabled = !isCIDEmpty || !isCNameEmpty;
         }
 
@@ -282,8 +281,8 @@ namespace MiniERP.Forms.Forms
 
         private void btnClean_Click(object sender, EventArgs e)
         {
-            txtCName.Text = "";
-            txtCID.Text = "";
+            txtSName.Text = "";
+            txtSID.Text = "";
 
             // Atualiza o estado do botão btnClean
             UpdateButtonText();
