@@ -20,7 +20,8 @@ namespace MiniERP.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            return Ok(await _productService.GetAllProductsAsync());
+            var resp = await _productService.GetAllProductsAsync();
+            return Ok(resp);
         }
 
         [HttpGet("{id}")]
