@@ -22,13 +22,23 @@ namespace MiniERP.Forms.Forms
             customerForm.Show();
         }
 
+        private void btnSupplier_Click(object sender, EventArgs e)
+        {
+            // Criar uma instância do novo formulário
+            SupplierForm suppliertForm = new SupplierForm();
+
+            // Exibir o novo formulário
+            suppliertForm.Show();
+        }
+
         private void btnProduct_Click(object sender, EventArgs e)
         {
             // Criar uma instância do novo formulário
-            SupplierForm supplierForm = new SupplierForm();
+            ProductForm productForm = new ProductForm();
 
             // Exibir o novo formulário
-            supplierForm.Show();
+            productForm.Show();
         }
+
     }
 }

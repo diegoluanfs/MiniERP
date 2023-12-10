@@ -88,11 +88,7 @@ namespace MiniERP.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("InvoiceId");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -135,25 +131,9 @@ namespace MiniERP.Migrations
 
             modelBuilder.Entity("MiniERP.Product", b =>
                 {
-                    b.HasOne("MiniERP.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MiniERP.Invoice", null)
                         .WithMany("Products")
                         .HasForeignKey("InvoiceId");
-
-                    b.HasOne("MiniERP.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("MiniERP.Invoice", b =>
