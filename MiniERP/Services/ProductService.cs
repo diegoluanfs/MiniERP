@@ -117,11 +117,6 @@ namespace MiniERP.Services
             {
                 throw new Exception("O nome do produto não pode estar vazio.");
             }
-
-            if (reqProduct.Price <= 0)
-            {
-                throw new Exception("O valor do produto deve ser maior que zero.");
-            }
         }
 
         private async Task ValidateProductForUpdate(Product product)
@@ -145,11 +140,6 @@ namespace MiniERP.Services
             if (string.IsNullOrEmpty(product.Name))
             {
                 throw new Exception("O nome do produto não pode estar vazio.");
-            }
-
-            if (product.Price <= 0)
-            {
-                throw new Exception("O valor do produto deve ser maior que zero.");
             }
         }
     }

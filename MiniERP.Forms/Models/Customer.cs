@@ -8,5 +8,7 @@
         public Customer() { }
 
         public Customer(int CustomerId, string Name) { }
+
+        public string IdAndName => $"{CustomerId} - {Name}";
     }
 }

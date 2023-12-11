@@ -137,6 +137,7 @@
             // 
             // cBoxPClient
             // 
+            this.cBoxPClient.Enabled = false;
             this.cBoxPClient.FormattingEnabled = true;
             this.cBoxPClient.Location = new System.Drawing.Point(416, 45);
             this.cBoxPClient.Name = "cBoxPClient";
@@ -145,6 +146,7 @@
             // 
             // cBoxPSupplier
             // 
+            this.cBoxPSupplier.Enabled = false;
             this.cBoxPSupplier.FormattingEnabled = true;
             this.cBoxPSupplier.Location = new System.Drawing.Point(123, 45);
             this.cBoxPSupplier.Name = "cBoxPSupplier";
