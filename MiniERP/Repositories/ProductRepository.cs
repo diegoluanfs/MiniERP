@@ -36,10 +36,9 @@ namespace MiniERP.Repositories
             var dbProduct = await _context.Products.FindAsync(product.ProductId);
             if (dbProduct != null)
             {
-                // Atualize as propriedades conforme necessário.
-                //dbProduct.Property1 = product.Property1;
-                //dbProduct.Property2 = product.Property2;
-                // ...
+                dbProduct.SupplierId = product.SupplierId;
+                dbProduct.ProductId = product.ProductId;
+                dbProduct.Name = product.Name;
 
                 await _context.SaveChangesAsync();
             }
